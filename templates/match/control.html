@@ -3,7 +3,81 @@
 {% block nav %}{% include 'nav.html' %}{% endblock nav %}
 {% block container %}
 <div class="container">
-
+    <!-- Event & Match -->
+    <div class="row mt-3">
+        <div class="col-6">
+            <h1>Event</h1>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Event:</span>
+                </div>
+                <select name="event" id="event" class="form-select">
+                    <option value="" selected disabled hidden>Select</option>
+                    {% for event in eventList %}
+                    <option value="{{event.id}}">{{event.id}}_{{event.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <h1>Match</h1>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Match:</span>
+                </div>
+                <select name="match" id="match" class="form-select">
+                    <option value="" selected>Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- Teams -->
+    <div class="row mt-3">
+        <div class="col-6">
+            <h3>Blue:</h3>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Team 1:</span>
+                </div>
+                <select name="team" id="teamBlue1" class="form-select" disabled>
+                    <option value="" selected>Select</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Team 2:</span>
+                </div>
+                <select name="team" id="teamBlue2" class="form-select" disabled>
+                    <option value="" selected>Select</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3>Red:</h3>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Team 1:</span>
+                </div>
+                <select name="team" id="teamRed1" class="form-select" disabled>
+                    <option value="" selected>Select</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Team 2:</span>
+                </div>
+                <select name="team" id="teamRed2" class="form-select" disabled>
+                    <option value="" selected>Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- Control -->
+    <h3 class="mt-3">Control</h3>
+    <div class="row justify-content-around">
+        <button class="btn btn-primary col-4" type="button">Start</button>
+        <button class="btn btn-danger col-4" type="button">Stop</button>
+    </div>
 </div>
 {% endblock %}
 {% block script %}
