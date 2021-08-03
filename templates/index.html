@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Welcome{% endblock title %}
+{% block nav %}{% include 'nav.html' %}{% endblock nav %}
+{% block container %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <div class="row mt-3">
+        <button type="button" class="btn btn-primary col-2 m-1" data-bs-toggle="modal" data-bs-target="#addEvent">
+            Add Event
+        </button>
+        <div class="modal fade" id="addEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEventLabel">Add New Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/event/" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ID: </span>
+                                </div>
+                                <input type="text" class="form-control" name="id" id="id" required>
+                            </div>
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Name: </span>
+                                </div>
+                                <input type="text" class="form-control" name="name" id="name" required>
+                            </div>
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Date: </span>
+                                </div>
+                                <input type="date" class="form-control" name="date" id="date" required>
+                            </div>
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Location: </span>
+                                </div>
+                                <input type="text" class="form-control" name="location" id="location">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="Submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary col-2 m-1" data-bs-toggle="modal" data-bs-target="#addTeam">
+            Add Team
+        </button>
+        <div class="modal fade" id="addTeam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addTeamLabel">Add New Team</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/team/" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">ID: </span>
+                                </div>
+                                <input type="text" class="form-control" name="id" id="id" required>
+                            </div>
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Name: </span>
+                                </div>
+                                <input type="text" class="form-control" name="name" id="name" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="Submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <ul class="nav nav-tabs mt-3" id="Tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="true">Event</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab" aria-controls="team" aria-selected="false">Team</button>
+        </li>
+    </ul>
+    <div class="tab-content mt-3" id="TabContent">
+        <div class="tab-pane fade show active" id="event" role="tabpanel" aria-labelledby="event-tab">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in eventList %}
+                    <tr>
+                        <th scope="row"><a href="/event?id={{event.id}}">{{event.id}}</a></th>
+                        <td>{{event.name}}</td>
+                        <td>{{event.location}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in teamList %}
+                    <tr>
+                        <th scope="row"><a href="/team?id={{team.id}}">{{team.id}}</a></th>
+                        <td>{{team.name}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock container %}

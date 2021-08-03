@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-hant">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+        <title>{% block title %}{% endblock title %}</title>
+    </head>
+
+    <body>
+        {% block nav %}{% endblock nav %}
+        {% block container %}{% endblock container %}
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        {% block script %}{% endblock script %}
+    </body>
+</html>
