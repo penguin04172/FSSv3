@@ -7,7 +7,10 @@ def control(request):
     return render(request, 'match/control.html')
 
 def scoring(request):
-    return render(request, 'match/scoring.html')
+    blue = request.GET.get('blue')
+    return render(request, 'match/scoring.html', {
+        'blue': blue,
+    })
 
 def stream(request):
     return render(request, 'match/stream.html')

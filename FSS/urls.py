@@ -30,7 +30,7 @@ urlpatterns = [
     path('event/', event),
     path('team/', team),
     path('match/control/', control),
-    path('math/scoring/', scoring),
+    path('match/scoring/', scoring),
     path('match/stream/', stream),
     path('match/data/', data),
     path('match/board', board),
