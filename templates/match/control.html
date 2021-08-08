@@ -82,6 +82,16 @@
 {% endblock %}
 {% block script %}
 <script>
+    function jsonPost(method, target, value) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, tar, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send(JSON.stringify(value));
 
+        return xhr;
+    }
+
+    
 </script>
 {% endblock script %}

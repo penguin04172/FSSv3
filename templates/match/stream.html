@@ -1,10 +1,101 @@
 {% extends 'base.html' %}
-{% block title %}Control{% endblock title %}
+{% block title %}Streaming{% endblock title %}
 {% block container %}
-<div class="container">
-
+<div class="container-fluid vh-100">
+    <div class="row h-75" style="background-color: rgb(0, 255, 0);"></div>
+    <div class="row h-25">
+        <div class="col">
+            <div class="row bg-white border-top border-bottom border-secondary h-25 justify-content-center">
+                <div class="col-4 text-center border-right border-secondary mt-1">
+                    <h1 id="match"></h1>
+                </div>
+                <div class="col-4 text-center border-left border-secondary mt-1">
+                    <h1 id="event"></h1>
+                </div>
+            </div>
+            <div class="row bg-secondary h-75">
+                <div class="col">
+                    <div class="row h-25 align-items-start">
+                        <div class="col row ml-2 mr-2 justify-content-between text-white text-center">
+                            <div class="col-3">
+                                <h2>Level 1</h2>
+                            </div>
+                            <div class="col-3">
+                                <h2>Level 2</h2>
+                            </div>
+                            <div class="col-3 ">
+                                <h2>Level 3</h2>
+                            </div>
+                        </div>
+                        <div class="col ml-2 mr-2 mt-1">
+                            <div class="progress" style="height: 45px;">
+                                <div class="progress-bar" role="progressbar" style="width: 0%;" id="timeProg"></div>
+                            </div>
+                            <h1 class="text-center" style="align-self: center; transform: translate(0, -100%);">
+                                <span class="badge badge-light badge-pill" id="timeLeft">0</span>
+                            </h1>
+                        </div>
+                        <div class="col row ml-2 mr-2 justify-content-between text-white text-center">
+                            <div class="col-3">
+                                <h2>Level 1</h2>
+                            </div>
+                            <div class="col-3">
+                                <h2>Level 2</h2>
+                            </div>
+                            <div class="col-3">
+                                <h2>Level 3</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row h-75 align-items-start">
+                        <div class="col-4">
+                            <div class="row ml-2 mr-2 justify-content-between text-white text-center">
+                                <div class="col-3 bg-danger">
+                                    <h1 id="lv1_red" name="lv_red">9</h1>
+                                </div>
+                                <div class="col-3 bg-danger">
+                                    <h1 id="lv2_red" name="lv_red">N/A</h1>
+                                </div>
+                                <div class="col-3 bg-danger">
+                                    <h1 id="lv3_red" name="lv_red">N/A</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col ml-2 mr-2 mt-1" style=" transform: translate(0, -10%);">
+                            <div class="row justify-content-between">
+                                <div class="col-2 text-center mt-1">
+                                    <h2 class="bg-light" id="team1_red" name="team_red">0000</h2>
+                                    <h2 class="bg-light" id="team2_red" name="team_red">0000</h2>
+                                    <h2 class="bg-light" id="team3_red" name="team_red">0000</h2>
+                                </div>
+                                <div class="col-4 bg-danger border text-center text-light mb-2">
+                                    <h1 style="font-size: 100px;" id="score_red">0</h1>
+                                </div>
+                                <div class="col-4 bg-primary border text-center text-light mb-2">
+                                    <h1 style="font-size: 100px;" id="score_blue">0</h1>
+                                </div>
+                                <div class="col-2 text-center mt-1">
+                                    <h2 class="bg-light" id="team1_blue" name="team_blue">0000</h2>
+                                    <h2 class="bg-light" id="team2_blue" name="team_blue">0000</h2>
+                                    <h2 class="bg-light" id="team3_blue" name="team_blue">0000</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col row ml-2 mr-2 justify-content-between text-white text-center">
+                            <div class="col-3 bg-primary">
+                                <h1 id="lv1_blue" name="lv_blue">N/A</h1>
+                            </div>
+                            <div class="col-3 bg-primary">
+                                <h1 id="lv2_blue" name="lv_blue">N/A</h1>
+                            </div>
+                            <div class="col-3 bg-primary">
+                                <h1 id="lv3_blue" name="lv_blue">9</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock %}
-{% block script %}
-
-{% endblock script %}
+{% endblock container %}
