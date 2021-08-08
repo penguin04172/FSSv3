@@ -14,8 +14,8 @@ DATA = {
         'serial': 0,
         'mode': '',
         'team': [],
-        'timer': 0,
-        'time': 0,
+        'leftTime': 0,
+        'passTime': 0,
     },
     'score': {
         'blue': {
