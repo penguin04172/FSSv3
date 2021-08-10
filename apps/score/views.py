@@ -18,6 +18,8 @@ DATA = {
         'time': 0,
         'yellow': [0, 0, 0, 0],
         'red': [0, 0, 0, 0],
+        'leftTime': 0,
+        'passTime': 0,
     },
     'score': {
         'blue': {

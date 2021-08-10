@@ -74,9 +74,19 @@
     </div>
     <!-- Control -->
     <h3 class="mt-3">Control</h3>
+    <div class="row mb-3 justify-content-around">
+        <div class="col-4 row">
+            <h1>Now Mode:&nbsp;</h1>
+            <h1 id="mode">Ready</h1>
+        </div>
+        <div class="col-4 row">
+            <h1>Time Left:&nbsp;</h1>
+            <h1 id="time">0</h1>
+        </div>
+    </div>
     <div class="row justify-content-around">
-        <button class="btn btn-primary col-4" type="button">Start</button>
-        <button class="btn btn-danger col-4" type="button">Stop</button>
+        <button class="btn btn-primary col-4" type="button" id="start" disabled>Start</button>
+        <button class="btn btn-danger col-4" type="button" id="reset" disabled>Stop</button>
     </div>
 </div>
 {% endblock %}
@@ -92,6 +102,145 @@
         return xhr;
     }
 
-    
+    function changeEvent() {
+        var sel = document.getElementById('event');
+        var event = sel.options[sel.selectedIndex].value;
+        var xhr = jsonPost('POST', '/match/data/', {'cmd': 'changeEvent', 'event': event});
+        var ms = document.getElementById('match');
+        ms.disabled = false;
+        var team = document.getElementsByName('team');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState==4 && xhr.status==200) {
+                res = JSON.parse(xhr.responseText);
+
+                var matchList = res['matchList'];
+                var teamList = res['teamList'];
+                ms.options.length = 0;
+                ms.options.add(new Option('Select', "", false, true));
+                ms.options[0].setAttribute('hidden', '');
+                for (var i=0 ; i<matchList.length ; i++) {
+                    ms.options.add(new Option(matchList[i]['name'], matchList[i]['id']));
+                }
+
+                for (var i=0 ; i<team.length ; i++) {
+                    team[i].length = 0;
+                    team.options.add(new Option('None', ''));
+                    for (var j=0 ; j<teamList.length ; j++) {
+                        team[i].options.add(new Option(teamList[i]['id'].toString() + ' ' + teamList[i]['name'], teamList[i]['id']));
+                    }
+                }
+            }
+        }
+    }
+
+    function changeMatch() {
+        var sel = document.getElementById('match');
+        var match = sel.options[sel.selectedIndex].value;
+        var xhr = jsonPost('POST', '/match/data/', {'cmd': 'changeMatch', 'match': match});
+        var team = document.getElementsByName('team');
+        document.getElementById('start').disabled = false;
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var res = JSON.parse(xhr.responseText);
+                for (var i=0 ; i<team.length ; i++) {
+                    team[i].value = res['team'][i];
+                    team[i].disabled = false;
+                }
+            }
+        }
+    }
+
+    function changeTeam() {
+        var sel = document.getElementsByName('team');
+        var value = [];
+        for (var i=0 ; i<sel.length ; i++) {
+            value[i] = sel[i].options[sel[i].selectedIndex].value;
+        }
+        
+        var xhr = jsonPost('POST', '/match/data/', {'cmd': 'changeTeam', 'team': value});
+    }
+
+    var startTime, mode, sflag=0, bg = document.createElement('audio');
+    bg.volume = 0;
+    var proc;
+    const modeList = ['Ready', 'CountDown', 'Auto', 'Tele', 'EndGame', 'Finish'];
+    function timeUpdate() {
+        var nowTime = new Date().getTime();
+        var passTime = nowTime - startTime;
+        var leftTime;
+        if (passTime < 15000) {
+            mode = 2;
+            leftTime = 15-parseInt(passTime/1000);
+        }else if (passTime < 120000) {
+            mode = 3;
+            leftTime = 150-parseInt(passTime/1000);
+        }else if (passTime < 150000) {
+            mode = 4;
+            leftTime = 150-parseInt(passTime/1000);
+        }else if (passTime < 180000) {
+            mode = 5;
+            leftTime = 0;
+        }else {
+            reset();
+        }
+
+        document.getElementById('mode').innerText = modeList[mode];
+        document.getElementById('time').innerText = leftTime.toString();
+        if (sflag != mode) {
+            switch (mode) {
+                case 2:
+                    bg.src = '/static/audio/auto.wav';
+                    break;
+                case 3:
+                    bg.src = '/static/audio/teleop.wav';
+                    break;
+                case 4:
+                    bg.src = '/static/audio/end.wav';
+                    break;
+                case 5:
+                    bg.src = '/static/audio/over.wav';
+                    break;
+            }
+            if (mode != 0) bg.play();
+            sflag = mode;
+        }
+
+        var xhr = jsonPost('POST', '/match/data/', {
+            'cmd': 'time',
+            'mode': mode,
+            'leftTime': leftTime,
+            'passTime': parseInt(passTime/1000),
+        })
+    }
+
+    function start() {
+        var cd = document.createElement("audio")
+        cd.src = '/static/audio/countdown.mp3';
+        cd.volume = 0;
+        cd.play();
+        mode = soundFlag = 1;
+        jsonPost('POST', '/match/data/', {
+            'cmd': 'time',
+            'mode': mode,
+            'leftTime': 0,
+            'passTime': 0,
+        })
+        cd.onended = function () {
+            startTime = new Date().getTime();
+            proc = setInterval(timeUpdate, 500);
+            document.getElementById('start').disabled = true;
+        }
+    }
+
+    function reset() {
+        mode = 0;
+        soundFlag = 0;
+        clearInterval(proc);
+        document.getElementById('mode').innerText = "Ready";
+        document.getElementById('time').innerText = "0";
+        document.getElementById('start').disabled = false;
+        jsonPost('POST', '/match/data/', {'cmd': 'reset'});
+    }
 </script>
 {% endblock script %}
