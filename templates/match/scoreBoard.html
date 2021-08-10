@@ -5,10 +5,10 @@
     <!-- Title -->
     <div class="row justify-content-around">
         <div class="col-6 bg-white text-center">
-            <h1 style="font-size: 60px;">NKT1 - Nanke Training 1</h3>
+            <h1 style="font-size: 60px;" id="event">NKT1 - Nanke Training 1</h3>
         </div>
         <div class="col-6 bg-white text-center">
-            <h1 style="font-size: 60px;">Quals 1 of 10</h3>
+            <h1 style="font-size: 60px;" id="match">Quals 1 of 10</h3>
         </div>
     </div>
     <!-- Content -->
@@ -25,21 +25,21 @@
                 <tbody>
                     <tr>
                         <th scope="row">Init</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sb"></td>
+                        <td name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">A</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">C</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">Park</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sb"></td>
+                        <td name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row"></th>
@@ -47,26 +47,25 @@
                     </tr>
                     <tr>
                         <th scope="row">A</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">C</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">Park</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sb"></td>
+                        <td name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">Spec</th>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2" name="sb"></td>
                     </tr>
                     <tr>
                         <th scope="row">Foul</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sb"></td>
+                        <td name="sb"></td>
                     </tr>
                 </tbody>
             </table>
@@ -75,8 +74,8 @@
             <div class="row mt-2">
                     <div class="col">
                         <div class="progress" style="height: 70px;">
-                            <div class="progress-bar bg-success" style="width: 25%;"></div>
-                            <span class="badge rounded-pill bg-light text-dark" style="position: fixed; left: 900px; font-size: 40px;">135</span>
+                            <div class="progress-bar bg-success" style="width: 0%;" id="timeProg"></div>
+                            <span class="badge rounded-pill bg-light text-dark" style="position: fixed; left: 900px; font-size: 40px;" id="timeLeft">15</span>
                         </div>
                     </div>
             </div>
@@ -84,34 +83,34 @@
                 <div class="col-6 text-center">
                     <div class="row bg-white">
                         <div class="col align-self-center">
-                            <h1 style="font-size: 75px;">6998</h1>
+                            <h1 style="font-size: 75px;" name="team">6998</h1>
                         </div>
                     </div>
                     <div class="row align-items-center bg-primary" style="height: 500px;">
                         <div class="col text-white">
-                            <h1 style="font-size: 150px;">50</h1>
+                            <h1 style="font-size: 150px;" id="scoreBlue">50</h1>
                         </div>
                     </div>
                     <div class="row bg-white">
                         <div class="col align-self-center">
-                            <h1 style="font-size: 75px;">6998</h1>
+                            <h1 style="font-size: 75px;" name="team">6998</h1>
                         </div>
                     </div>
                 </div>
                 <div class="col-6 text-center">
                     <div class="row bg-white">
                         <div class="col align-self-center">
-                            <h1 style="font-size: 75px;">6998</h1>
+                            <h1 style="font-size: 75px;" name="team">6998</h1>
                         </div>
                     </div>
                     <div class="row align-items-center bg-danger" style="height: 500px;">
                         <div class="col text-white">
-                            <h1 style="font-size: 150px;">50</h1>
+                            <h1 style="font-size: 150px;" id="scoreRed">50</h1>
                         </div>
                     </div>
                     <div class="row bg-white">
                         <div class="col align-self-center">
-                            <h1 style="font-size: 75px;">6998</h1>
+                            <h1 style="font-size: 75px;" name="team">6998</h1>
                         </div>
                     </div>
                 </div>
@@ -129,48 +128,47 @@
                 <tbody>
                     <tr>
                         <th scope="row">Init</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sr"></td>
+                        <td name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">A</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">C</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">Park</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sr"></td>
+                        <td name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row"></th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">A</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">C</th>
-                        <td colspan="2"></td>
+                        <td colspan="2" name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">Park</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sr"></td>
+                        <td name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">Spec</th>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2" name="sr"></td>
                     </tr>
                     <tr>
                         <th scope="row">Foul</th>
-                        <td></td>
-                        <td></td>
+                        <td name="sr"></td>
+                        <td name="sr"></td>
                     </tr>
                 </tbody>
             </table>
@@ -178,3 +176,83 @@
     </div>
 </div>
 {% endblock container %}
+{% block script %}
+<script>
+    function jsonPost(method, target, value) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, target, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send(JSON.stringify(value));
+
+        return xhr;
+    }
+
+    var audio = document.createElement("audio"), sFlag=0;
+    function updateData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/match/data/');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState==4 && xhr.status==200) {
+                var res = JSON.parse(xhr.responseText);
+                document.getElementById('event').innerText = res['match']['event'] + ' ' + res['match']['eventName'];
+                const typeCheck = ['', 'Pratice', 'Quals', 'Quaters', 'Semis', 'Finals'];
+                document.getElementById('match').innerText = typeCheck[res['match']['type']] + ' ' + res['match']['serial'];
+
+                res['match']['passTime'] = res['match']['passTime']>150?150:res['match']['passTime'];
+                var passPer = parseInt(res['match']['passTime']/1.5), timeLeft = res['match']['leftTime'];
+                document.getElementById('timeProg').style.width = passPer.toString() + "%";
+                document.getElementById('timeProg').style.backgroundColor = res['pass'] < 120?"#28a745":res['pass']<150?"#ffc107":"#dc3545";
+                document.getElementById('timeLeft').innerText = timeLeft.toString();
+
+                var team = document.getElementById('team');
+                for (var i=0 ; i<team.length ; i++) {
+                    team[i].innerText = res['match']['team'][i];
+                }
+
+                document.getElementById('scoreBlue') = res['score']['blue']['all'];
+                document.getElementById('scoreRed') = res['score']['red']['all'];
+                
+                const check = document.createElement('img'), cross=document.createElement('img');
+                check.src = "/static/icon/check-lg.svg";
+                cross.src = "/static/icon/x-lg.svg";
+
+                var sb = document.getElementsByName('sb');
+                sb[0].innerHTML = res['score']['blue']['each'][0]['init']?check:cross;
+                sb[1].innerHTML = res['score']['blue']['each'][1]['init']?check:cross;
+                sb[2].innerText = res['score']['blue']['auto_a'];
+                sb[3].innerText = res['score']['blue']['auto_c'];
+                sb[4].innerHTML = res['score']['blue']['each'][0]['auto_end']?check:cross;
+                sb[5].innerHTML = res['score']['blue']['each'][1]['auto_end']?check:cross;
+                sb[6].innerText = res['score']['blue']['tele_a'];
+                sb[7].innerHTML = res['score']['blue']['tele_c']?check:cross;
+                sb[8].innerHTML = res['score']['blue']['each'][0]['tele_end']?check:cross;
+                sb[9].innerHTML = res['score']['blue']['each'][1]['tele_end']?check:cross;
+                sb[10].innerText = res['score']['blue']['spec'];
+                sb[11].innerText = res['score']['blue']['foul'];
+                sb[12].innerText = res['score']['blue']['tech'];
+
+                var sr = document.getElementsByName('sr');
+                sr[0].innerHTML = res['score']['red']['each'][0]['init']?check:cross;
+                sr[1].innerHTML = res['score']['red']['each'][1]['init']?check:cross;
+                sr[2].innerText = res['score']['red']['auto_a'];
+                sr[3].innerText = res['score']['red']['auto_c'];
+                sr[4].innerHTML = res['score']['red']['each'][0]['auto_end']?check:cross;
+                sr[5].innerHTML = res['score']['red']['each'][1]['auto_end']?check:cross;
+                sr[6].innerText = res['score']['red']['tele_a'];
+                sr[7].innerHTML = res['score']['red']['tele_c']?check:cross;
+                sr[8].innerHTML = res['score']['red']['each'][0]['tele_end']?check:cross;
+                sr[9].innerHTML = res['score']['red']['each'][1]['tele_end']?check:cross;
+                sr[10].innerText = res['score']['red']['spec'];
+                sr[11].innerText = res['score']['red']['foul'];
+                sr[12].innerText = res['score']['red']['tech'];
+
+            }
+        }
+    }
+</script>
+{% endblock script %}

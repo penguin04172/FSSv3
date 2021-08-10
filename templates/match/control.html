@@ -11,7 +11,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Event:</span>
                 </div>
-                <select name="event" id="event" class="form-select">
+                <select name="event" id="event" class="form-select" onchange="changeEvent()">
                     <option value="" selected disabled hidden>Select</option>
                     {% for event in eventList %}
                     <option value="{{event.id}}">{{event.id}}_{{event.name}}</option>
@@ -25,7 +25,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Match:</span>
                 </div>
-                <select name="match" id="match" class="form-select">
+                <select name="match" id="match" class="form-select" onchange="changeMatch()">
                     <option value="" selected>Select</option>
                 </select>
             </div>
@@ -39,7 +39,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Team 1:</span>
                 </div>
-                <select name="team" id="teamBlue1" class="form-select" disabled>
+                <select name="team" id="teamBlue1" class="form-select" disabled onchange="changeTeam()">
                     <option value="" selected>Select</option>
                 </select>
             </div>
@@ -47,7 +47,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Team 2:</span>
                 </div>
-                <select name="team" id="teamBlue2" class="form-select" disabled>
+                <select name="team" id="teamBlue2" class="form-select" disabled onchange="changeTeam()">
                     <option value="" selected>Select</option>
                 </select>
             </div>
@@ -58,7 +58,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Team 1:</span>
                 </div>
-                <select name="team" id="teamRed1" class="form-select" disabled>
+                <select name="team" id="teamRed1" class="form-select" disabled onchange="changeTeam()">
                     <option value="" selected>Select</option>
                 </select>
             </div>
@@ -66,7 +66,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Team 2:</span>
                 </div>
-                <select name="team" id="teamRed2" class="form-select" disabled>
+                <select name="team" id="teamRed2" class="form-select" disabled onchange="changeTeam()">
                     <option value="" selected>Select</option>
                 </select>
             </div>
@@ -85,8 +85,8 @@
         </div>
     </div>
     <div class="row justify-content-around">
-        <button class="btn btn-primary col-4" type="button" id="start" disabled>Start</button>
-        <button class="btn btn-danger col-4" type="button" id="reset" disabled>Stop</button>
+        <button class="btn btn-primary col-4" type="button" id="start" disabled onclick="start()">Start</button>
+        <button class="btn btn-danger col-4" type="button" id="reset" disabled onclick="reset()">Stop</button>
     </div>
 </div>
 {% endblock %}
@@ -94,7 +94,7 @@
 <script>
     function jsonPost(method, target, value) {
         var xhr = new XMLHttpRequest();
-        xhr.open(method, tar, true);
+        xhr.open(method, target, true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
         xhr.send(JSON.stringify(value));
@@ -124,9 +124,9 @@
 
                 for (var i=0 ; i<team.length ; i++) {
                     team[i].length = 0;
-                    team.options.add(new Option('None', ''));
+                    team[i].options.add(new Option('None', ''));
                     for (var j=0 ; j<teamList.length ; j++) {
-                        team[i].options.add(new Option(teamList[i]['id'].toString() + ' ' + teamList[i]['name'], teamList[i]['id']));
+                        team[i].options.add(new Option(teamList[j]['id'].toString() + ' ' + teamList[j]['name'], teamList[j]['id']));
                     }
                 }
             }
@@ -155,14 +155,14 @@
         var sel = document.getElementsByName('team');
         var value = [];
         for (var i=0 ; i<sel.length ; i++) {
-            value[i] = sel[i].options[sel[i].selectedIndex].value;
+            value.push(parseInt(sel[i].options[sel[i].selectedIndex].value))
         }
         
         var xhr = jsonPost('POST', '/match/data/', {'cmd': 'changeTeam', 'team': value});
     }
 
     var startTime, mode, sflag=0, bg = document.createElement('audio');
-    bg.volume = 0;
+    bg.volume = 1;
     var proc;
     const modeList = ['Ready', 'CountDown', 'Auto', 'Tele', 'EndGame', 'Finish'];
     function timeUpdate() {
@@ -216,8 +216,8 @@
 
     function start() {
         var cd = document.createElement("audio")
-        cd.src = '/static/audio/countdown.mp3';
-        cd.volume = 0;
+        cd.src = '/static/audio/countdown.wav';
+        cd.volume = 1;
         cd.play();
         mode = soundFlag = 1;
         jsonPost('POST', '/match/data/', {
@@ -230,6 +230,7 @@
             startTime = new Date().getTime();
             proc = setInterval(timeUpdate, 500);
             document.getElementById('start').disabled = true;
+            document.getElementById('reset').disabled = false;
         }
     }
 
@@ -240,6 +241,7 @@
         document.getElementById('mode').innerText = "Ready";
         document.getElementById('time').innerText = "0";
         document.getElementById('start').disabled = false;
+        document.getElementById('reset').disabled = true;
         jsonPost('POST', '/match/data/', {'cmd': 'reset'});
     }
 </script>
