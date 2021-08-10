@@ -13,9 +13,11 @@ DATA = {
         'type': 0,
         'serial': 0,
         'mode': '',
-        'team': [],
+        'team': ['', '', '', ''],
         'timer': 0,
         'time': 0,
+        'yellow': [0, 0, 0, 0],
+        'red': [0, 0, 0, 0],
     },
     'score': {
         'blue': {
