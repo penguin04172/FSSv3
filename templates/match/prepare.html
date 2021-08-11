@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load myfilter %}
+{% block title %}Call{% endblock title %}
+{% block container %}
+<div class="container-fluid vh-100 bg-light">
+    <div class="row justify-content-around">
+        <div class="col-4 m-2">
+            <h1 style="font-size: 70px;">{{type}} {{data.match.serial}}</h1>
+        </div>
+        <div class="col-4 text-right m-2">
+            <h1 style="font-size: 70px;">Match Review</h1>
+        </div>
+    </div>
+    <div class="row ml-3 mr-3 mt-5">
+        <div class="col-2">
+            <h1>Team#</h1>
+        </div>
+        <div class="col-9">
+            <h1>Nickname</h1>
+        </div>
+        <div class="col-1 text-center">
+            <h1>Rank</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-light">
+            <div class="row m-3">
+                <div class="col" style="font-size: 50px;">
+                    <div class="row bg-primary rounded mb-3">
+                        <div class="col-2">{{team.0.id}}</div>
+                        <div class="col-9">{{team.0.name}}</div>
+                        <div class="col-1 text-center"></div>
+                    </div>
+                    <div class="row bg-primary rounded mb-3">
+                        <div class="col-2">{{team.1.id}}</div>
+                        <div class="col-9">{{team.1.name}}</div>
+                        <div class="col-1 text-center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-3">
+                <div class="col" style="font-size: 50px;">
+                    <div class="row bg-danger rounded mb-3">
+                        <div class="col-2">{{team.2.id}}</div>
+                        <div class="col-9">{{team.2.name}}</div>
+                        <div class="col-1 text-center"></div>
+                    </div>
+                    <div class="row bg-danger rounded mb-3">
+                        <div class="col-2">{{team.3.id}}</div>
+                        <div class="col-9">{{team.3.name}}</div>
+                        <div class="col-1 text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-4 bg-dark rounded">
+        <div class="col-2"></div>
+        <div class="col-8 text-center text-white">
+            <br><br>
+            <h1 style="font-size: 60px; font-weight: 600;">{{data.match.eventName}}</h1>
+            <br><br>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+{% endblock container %}

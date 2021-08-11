@@ -162,7 +162,7 @@
     }
 
     var startTime, mode, sflag=0, bg = document.createElement('audio');
-    bg.volume = 1;
+    bg.volume = 0;
     var proc;
     const modeList = ['Ready', 'CountDown', 'Auto', 'Tele', 'EndGame', 'Finish'];
     function timeUpdate() {
@@ -215,9 +215,9 @@
     }
 
     function start() {
-        var cd = document.createElement("audio")
+        var cd = document.createElement("audio");
         cd.src = '/static/audio/countdown.wav';
-        cd.volume = 1;
+        cd.volume = 0;
         cd.play();
         mode = soundFlag = 1;
         jsonPost('POST', '/match/data/', {

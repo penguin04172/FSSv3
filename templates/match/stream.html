@@ -16,15 +16,12 @@
             <div class="row bg-secondary h-75">
                 <div class="col">
                     <div class="row h-25 align-items-start">
-                        <div class="col row ml-2 mr-2 justify-content-between text-white text-center">
+                        <div class="col row ml-2 mr-2 justify-content-around text-white text-center">
                             <div class="col-3">
-                                <h2>Level 1</h2>
+                                <h2>Area A</h2>
                             </div>
                             <div class="col-3">
-                                <h2>Level 2</h2>
-                            </div>
-                            <div class="col-3 ">
-                                <h2>Level 3</h2>
+                                <h2>Park</h2>
                             </div>
                         </div>
                         <div class="col ml-2 mr-2 mt-1">
@@ -35,61 +32,50 @@
                                 <span class="badge badge-light badge-pill" id="timeLeft">0</span>
                             </h1>
                         </div>
-                        <div class="col row ml-2 mr-2 justify-content-between text-white text-center">
+                        <div class="col row ml-2 mr-2 justify-content-around text-white text-center">
                             <div class="col-3">
-                                <h2>Level 1</h2>
+                                <h2>Area A</h2>
                             </div>
                             <div class="col-3">
-                                <h2>Level 2</h2>
-                            </div>
-                            <div class="col-3">
-                                <h2>Level 3</h2>
+                                <h2>Park</h2>
                             </div>
                         </div>
                     </div>
                     <div class="row h-75 align-items-start">
+                        <div class="col row ml-2 mr-2 justify-content-around text-white text-center">
+                            <div class="col-3 bg-primary">
+                                <h1 id="lv1_blue" name="lv_blue">9</h1>
+                            </div>
+                            <div class="col-3 bg-primary">
+                                <h1 id="lv2_blue" name="lv_blue">N/A</h1>
+                            </div>
+                        </div>
+                        <div class="col ml-2 mr-2 mt-1" style=" transform: translate(0, -10%);">
+                            <div class="row justify-content-between">
+                                <div class="col-2 text-center mt-1">
+                                    <h2 class="bg-light" id="team1_blue" name="team">0000</h2>
+                                    <h2 class="bg-light" id="team2_blue" name="team">0000</h2>
+                                </div>
+                                <div class="col-4 bg-primary border text-center text-light mb-2">
+                                    <h1 style="font-size: 100px;" id="score_blue">0</h1>
+                                </div>
+                                <div class="col-4 bg-danger border text-center text-light mb-2">
+                                    <h1 style="font-size: 100px;" id="score_red">0</h1>
+                                </div>
+                                <div class="col-2 text-center mt-1">
+                                    <h2 class="bg-light" id="team1_red" name="team">0000</h2>
+                                    <h2 class="bg-light" id="team2_red" name="team">0000</h2>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-4">
-                            <div class="row ml-2 mr-2 justify-content-between text-white text-center">
+                            <div class="row ml-2 mr-2 justify-content-around text-white text-center">
                                 <div class="col-3 bg-danger">
                                     <h1 id="lv1_red" name="lv_red">9</h1>
                                 </div>
                                 <div class="col-3 bg-danger">
                                     <h1 id="lv2_red" name="lv_red">N/A</h1>
                                 </div>
-                                <div class="col-3 bg-danger">
-                                    <h1 id="lv3_red" name="lv_red">N/A</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col ml-2 mr-2 mt-1" style=" transform: translate(0, -10%);">
-                            <div class="row justify-content-between">
-                                <div class="col-2 text-center mt-1">
-                                    <h2 class="bg-light" id="team1_red" name="team_red">0000</h2>
-                                    <h2 class="bg-light" id="team2_red" name="team_red">0000</h2>
-                                    <h2 class="bg-light" id="team3_red" name="team_red">0000</h2>
-                                </div>
-                                <div class="col-4 bg-danger border text-center text-light mb-2">
-                                    <h1 style="font-size: 100px;" id="score_red">0</h1>
-                                </div>
-                                <div class="col-4 bg-primary border text-center text-light mb-2">
-                                    <h1 style="font-size: 100px;" id="score_blue">0</h1>
-                                </div>
-                                <div class="col-2 text-center mt-1">
-                                    <h2 class="bg-light" id="team1_blue" name="team_blue">0000</h2>
-                                    <h2 class="bg-light" id="team2_blue" name="team_blue">0000</h2>
-                                    <h2 class="bg-light" id="team3_blue" name="team_blue">0000</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col row ml-2 mr-2 justify-content-between text-white text-center">
-                            <div class="col-3 bg-primary">
-                                <h1 id="lv1_blue" name="lv_blue">N/A</h1>
-                            </div>
-                            <div class="col-3 bg-primary">
-                                <h1 id="lv2_blue" name="lv_blue">N/A</h1>
-                            </div>
-                            <div class="col-3 bg-primary">
-                                <h1 id="lv3_blue" name="lv_blue">9</h1>
                             </div>
                         </div>
                     </div>
@@ -99,3 +85,82 @@
     </div>
 </div>
 {% endblock container %}
+{% block script %}
+<script>
+    var audio = document.createElement('audio'), sFlag=0;
+    
+    function updateData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/match/data');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var res = JSON.parse(xhr.responseText);
+
+                document.getElementById('event').innerText = res['match']['eventName'];
+                const typeCheck = ['', 'Pratice', 'Quals', 'Quaters', 'Semis', 'Finals'];
+                document.getElementById('match').innerText = typeCheck[res['match']['type']] + ' ' + res['match']['serial'];
+                
+                document.getElementById('score_blue').innerText = res['score']['blue']['all_point'];
+                document.getElementById('score_red').innerText = res['score']['red']['all_point'];
+
+                res['match']['passTime'] = res['match']['passTime']>150?150:res['match']['passTime'];
+                var passPer = parseInt(res['match']['passTime']/1.5), leftTime = res['match']['leftTime'];
+                document.getElementById('timeProg').style.width = passPer.toString() + '%';
+                document.getElementById('timeProg').style.backgroundColor = res['match']['passTime'] < 120?"#28a745":res['match']['passTime']<150?"#ffc107":"#dc3545";
+                document.getElementById('timeLeft').innerText = leftTime.toString();
+
+                team = document.getElementsByName('team');
+                for (var i=0 ; i<team.length ; i++) {
+                    team[i].innerText = res['match']['team'][i];
+                }
+
+                const check = '<img src="/static/icon/check-lg.svg"></img>', cross = '<img src="/static/icon/x-lg.svg"></img>';
+                var ballBlue = res['score']['blue']['auto_a'] + res['score']['blue']['tele_a'];
+                var ballRed = res['score']['red']['auto_a'] + res['score']['red']['tele_a'];
+
+                var lvb = document.getElementsByName('lv_blue'), lvr = document.getElementsByName('lv_red');
+                lvb[0].innerHTML = ballBlue>=9?check:cross;
+                lvb[1].innerHTML = res['score']['blue']['each'][0]['tele_end'] && res['score']['blue']['each'][1]['tele_end'] && res['score']['blue']['end_c']>0 ? check:cross;
+                lvr[0].innerHTML = ballRed>=9?check:cross;
+                lvr[1].innerHTML = res['score']['red']['each'][0]['tele_end'] && res['score']['red']['each'][1]['tele_end'] && res['score']['red']['end_c']>0 ? check:cross;
+
+                if (sFlag != res['match']['mode']) {
+                    switch (res['match']['mode']) {
+                        case 1:
+                            audio.src = "/static/audio/countdown.wav";
+                            break;
+                        case 2:
+                            audio.src = "/static/audio/auto.wav";
+                            break;
+                        case 3:
+                            audio.src = "/static/audio/teleop.wav";
+                            break;
+                        case 4:
+                            audio.src = "/static/audio/end.wav";
+                            break;
+                        case 5:
+                            audio.src = "/static/audio/over.wav";
+                            break;
+                    }
+                    if (res['match']['mode']) {
+                        audio.play();
+                    }
+                    sFlag = res['match']['mode'];
+                }
+
+
+            }
+        }
+    }
+
+    var updaterData;
+    window.onload = function () {
+        updaterData = setInterval(updateData, 500);
+    }
+
+</script>
+{% endblock script %}

@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% block title %}Result{% endblock title %}
+{% block container %}
+<div class="container-fluid vh-100" style="background-color: lightcyan;">
+    <div class="row ml-5">
+        <div class="col mt-5 ml-3">
+            <h1 style="font-size: 70px;">{{type.name}} {{data.match.serial}}</h1>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col bg-primary rounded mr-5 ml-3 mt-3">
+            <div class="row mt-3 mr-2 mb-3">
+                <div class="col bg-light rounded ml-3">
+                    <div class="row">
+                        <div class="col text-center m-3">
+                            <h1 style="font-size: 110px;">{{scoreBlue.all_point}}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            {% if scoreBlue.all_point > scoreRed.all_point %}<h1>WIN{% if scoreBlue.all_point >= highScore %}/Highest{% endif %}</h1>{% else %}<h1 class="text-light">Pass</h1>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 text-white text-center">
+                    <div class="row">
+                        <div class="col-3">
+                            <h1><strong>Team</strong></h1>
+                        </div>
+                        <div class="col-6 text-left">
+                            <h1><strong>Nickname</strong></h1>
+                        </div>
+                        <div class="col-3">
+                            <h1><strong>Rank</strong></h1>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <h1>{{team.0.id}}</h1>
+                        </div>
+                        <div class="col-7 text-left" style="height: 60px;">
+                            <h1>{% if team.0.name|length > 10 %}<marquee>{{team.0.name}}</marquee>{% else %}{{team.0.name}}{% endif %}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h1></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h1>{{team.1.id}}</h1>
+                        </div>
+                        <div class="col-7 text-left" style="height: 60px;">
+                            <h1>{% if team.1.name|length > 10 %}<marquee>{{team.1.name}}</marquee>{% else %}{{team.1.name}}{% endif %}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h1></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col bg-secondary rounded text-white m-1">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <h1>INITIATION LINE</h1>
+                        </div>
+                        <div class="col-3 mr-1">
+                            <h1>{{scoreBlue.init_point}}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h1>Area A</h1>
+                        </div>
+                        <div class="col-3 mr-1">
+                            <h1>{{scoreBlue.area_a}}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h1>Area C</h1>
+                        </div>
+                        <div class="col-3 mr-1">
+                            <h1>{{scoreBlue.area_c}}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h1>END GAME</h1>
+                        </div>
+                        <div class="col-3 mr-1">
+                            <h1>{{scoreBlue.end_point}}</h1>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h1>RED PENALTY</h1>
+                        </div>
+                        <div class="col-3 mr-1">
+                            <h1>{{scoreBlue.foul_point}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 bg-secondary rounded m-1">
+                    <div class="row mt-3">
+                        <div class="col text-center text-white mb-3">
+                            <h1>{{scoreBlue.rank_point}} RP</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ml-3 mr-3 mb-3 border text-center {% if scoreBlue.charged %}bg-primary{% else %}bg-white{% endif %}">
+                            <h1>Charged</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ml-3 mr-3 mb-3 border text-center {% if scoreBlue.parked %}bg-primary{% else %}bg-white{% endif %}">
+                            <h1>Parked</h1>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col ml-3 mr-3 border text-center {% if scoreBlue.all_point > scoreRed.all_point %}bg-primary{% else %}bg-white{% endif %}">
+                            <h1>WINNER</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col bg-danger rounded ml-5 mr-3 mt-3">
+            <div class="row mt-3 ml-2 mb-3">
+                <div class="col-8 text-white text-center">
+                    <div class="row">
+                        <div class="col-3">
+                            <h1><strong>Team</strong></h1>
+                        </div>
+                        <div class="col-6 text-left">
+                            <h1><strong>Nickname</strong></h1>
+                        </div>
+                        <div class="col-3">
+                            <h1><strong>Rank</strong></h1>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <h1>{{team.2.id}}</h1>
+                        </div>
+                        <div class="col-7 text-left" style="height: 60px;">
+                            <h1>{% if team.2.name|length > 10 %}<marquee>{{team.2.name}}</marquee>{% else %}{{team.2.name}}{% endif %}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h1></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h1>{{team.3.id}}</h1>
+                        </div>
+                        <div class="col-7 text-left" style="height: 60px;">
+                            <h1>{% if team.3.name|length > 10 %}<marquee>{{team.3.name}}</marquee>{% else %}{{team.3.name}}{% endif %}</h1>
+                        </div>
+                        <div class="col-2">
+                            <h1></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col bg-light rounded mr-3">
+                    <div class="row">
+                        <div class="col text-center m-3">
+                            <h1 style="font-size: 110px;">{{scoreRed.all_point}}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            {% if scoreRed.all_point > scoreBlue.all_point %}<h1>WIN{% if scoreRed.all_point >= highScore %}/Highest{% endif %}</h1>{% else %}<h1 class="text-light">Pass</h1>{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 bg-secondary rounded m-1">
+                    <div class="row mt-3">
+                        <div class="col text-center text-white mb-3">
+                            <h1>{{scoreRed.rank_point}} RP</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ml-3 mr-3 mb-3 border text-center {% if scoreRed.charged %}bg-danger{% else %}bg-white{% endif %}">
+                            <h1>Charged</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ml-3 mr-3 mb-3 border text-center {% if scoreRed.parked %}bg-danger{% else %}bg-white{% endif %}">
+                            <h1>Parked</h1>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col ml-3 mr-3 border text-center {% if scoreRed.all_point > scoreBlue.all_point %}bg-danger{% else %}bg-white{% endif %}">
+                            <h1>WINNER</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col bg-secondary rounded text-white m-1">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <h1>{{scoreRed.init_point}}</h1>
+                        </div>
+                        <div class="col-9 text-end mr-1">
+                            <h1>INITIATION LINE</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h1>{{scoreRed.area_a}}</h1>
+                        </div>
+                        <div class="col-9 text-end mr-1">
+                            <h1>Area A</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h1>{{scoreRed.area_c}}</h1>
+                        </div>
+                        <div class="col-9 text-end mr-1">
+                            <h1>Area C</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h1>{{scoreRed.end_point}}</h1>
+                        </div>
+                        <div class="col-9 text-end mr-1">
+                            <h1>END GAME</h1>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h1>{{scoreRed.foul_point}}</h1>
+                        </div>
+                        <div class="col-9 text-end mr-1">
+                            <h1>BLUE PENALTY</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-4 bg-dark rounded">
+        <div class="col-3"></div>
+        <div class="col-6 text-center text-white">
+            <br><br>
+            <h1 style="font-size: 60px; font-weight: 600;">{{data.match.eventName}}</h1>
+            <br><br>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{% endblock container %}

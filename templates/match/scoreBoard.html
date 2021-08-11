@@ -146,7 +146,7 @@
                     </tr>
                     <tr>
                         <th scope="row"></th>
-                        <td colspan="2" name="sr"></td>
+                        <td colspan="2"></td>
                     </tr>
                     <tr>
                         <th scope="row">A</th>
@@ -209,15 +209,15 @@
                 document.getElementById('timeProg').style.backgroundColor = res['pass'] < 120?"#28a745":res['pass']<150?"#ffc107":"#dc3545";
                 document.getElementById('timeLeft').innerText = timeLeft.toString();
 
-                var team = document.getElementById('team');
+                var team = document.getElementsByName('team');
                 for (var i=0 ; i<team.length ; i++) {
                     team[i].innerText = res['match']['team'][i];
                 }
 
-                document.getElementById('scoreBlue') = res['score']['blue']['all'];
-                document.getElementById('scoreRed') = res['score']['red']['all'];
+                document.getElementById('scoreBlue').innerText = res['score']['blue']['all_point'];
+                document.getElementById('scoreRed').innerText = res['score']['red']['all_point'];
                 
-                const check = document.createElement('img'), cross=document.createElement('img');
+                const check = '<img src="/static/icon/check-lg.svg"></img>', cross = '<img src="/static/icon/x-lg.svg"></img>';
                 check.src = "/static/icon/check-lg.svg";
                 cross.src = "/static/icon/x-lg.svg";
 
@@ -229,10 +229,10 @@
                 sb[4].innerHTML = res['score']['blue']['each'][0]['auto_end']?check:cross;
                 sb[5].innerHTML = res['score']['blue']['each'][1]['auto_end']?check:cross;
                 sb[6].innerText = res['score']['blue']['tele_a'];
-                sb[7].innerHTML = res['score']['blue']['tele_c']?check:cross;
+                sb[7].innerText = res['score']['blue']['tele_c'];
                 sb[8].innerHTML = res['score']['blue']['each'][0]['tele_end']?check:cross;
                 sb[9].innerHTML = res['score']['blue']['each'][1]['tele_end']?check:cross;
-                sb[10].innerText = res['score']['blue']['spec'];
+                sb[10].innerText = res['score']['blue']['end_c'];
                 sb[11].innerText = res['score']['blue']['foul'];
                 sb[12].innerText = res['score']['blue']['tech'];
 
@@ -244,15 +244,19 @@
                 sr[4].innerHTML = res['score']['red']['each'][0]['auto_end']?check:cross;
                 sr[5].innerHTML = res['score']['red']['each'][1]['auto_end']?check:cross;
                 sr[6].innerText = res['score']['red']['tele_a'];
-                sr[7].innerHTML = res['score']['red']['tele_c']?check:cross;
+                sr[7].innerText = res['score']['red']['tele_c'];
                 sr[8].innerHTML = res['score']['red']['each'][0]['tele_end']?check:cross;
                 sr[9].innerHTML = res['score']['red']['each'][1]['tele_end']?check:cross;
-                sr[10].innerText = res['score']['red']['spec'];
+                sr[10].innerText = res['score']['red']['end_c'];
                 sr[11].innerText = res['score']['red']['foul'];
                 sr[12].innerText = res['score']['red']['tech'];
 
             }
         }
+    }
+
+    window.onload = function() {
+        updater = setInterval(updateData, 500);
     }
 </script>
 {% endblock script %}

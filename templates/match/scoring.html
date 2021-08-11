@@ -36,10 +36,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Auto A:</span>
                         </div>
-                        <button type="button" class="btn btn-danger">-</button>
-                        <input type="number" class="form-control" name="auto" id="auto_a" value="0" disabled>
+                        <button type="button" class="btn btn-danger" onclick="minus('auto_a')">-</button>
+                        <input type="number" class="form-control" name="auto" id="auto_a" value="0" max="100" disabled>
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">+</button>
+                            <button type="button" class="btn btn-primary" onclick="plus('auto_a')">+</button>
                         </div>
                     </div>
                 </div>
@@ -50,10 +50,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Auto C:</span>
                         </div>
-                        <button type="button" class="btn btn-danger">-</button>
-                        <input type="number" class="form-control" name="auto" id="auto_c" value="0" disabled>
+                        <button type="button" class="btn btn-danger" onclick="minus('auto_c')">-</button>
+                        <input type="number" class="form-control" name="auto" id="auto_c" value="0" max="100" disabled>
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">+</button>
+                            <button type="button" class="btn btn-primary" onclick="plus('auto_c')">+</button>
                         </div>
                     </div>
                 </div>
@@ -66,10 +66,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Tele A:</span>
                         </div>
-                        <button type="button" class="btn btn-danger">-</button>
-                        <input type="number" class="form-control" name="tele" id="tele_a" value="0" disabled>
+                        <button type="button" class="btn btn-danger" onclick="minus('tele_a')">-</button>
+                        <input type="number" class="form-control" name="tele" id="tele_a" value="0" max="100" disabled>
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">+</button>
+                            <button type="button" class="btn btn-primary" onclick="plus('tele_a')">+</button>
                         </div>
                     </div>
                 </div>
@@ -80,8 +80,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Tele C:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="tele" id="tele_c">Get it</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="tele" id="tele_c_switch" onclick="buttonSwitch('tele_c')">Get it</button>
+                        <input type="number" value="0" class="input-group-text" id="tele_c" disabled>
                     </div>
                 </div>
             </div>
@@ -94,10 +94,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Special:</span>
                         </div>
-                        <button type="button" class="btn btn-danger">-</button>
-                        <input type="number" class="form-control" name="spec" id="spec" value="0" disabled>
+                        <button type="button" class="btn btn-danger" onclick="minus('end_c')">-</button>
+                        <input type="number" class="form-control" name="end" id="end_c" value="0" max="2" disabled>
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">+</button>
+                            <button type="button" class="btn btn-primary" onclick="plus('end_c')">+</button>
                         </div>
                     </div>
                 </div>
@@ -112,8 +112,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Team 1:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="init" id="init_1">Exit</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="init" id="init-1" onclick="buttonSwitch('init-1')">Exit</button>
+                        <img src="/static/icon/x-lg.svg" class="input-group-text" id="init_1_hud">
                     </div>
                 </div>
             </div>
@@ -123,8 +123,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Team 2:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="init" id="init_2">Exit</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="init" id="init-2" onclick="buttonSwitch('init-2')">Exit</button>
+                        <img src="/static/icon/x-lg.svg" class="input-group-text" id="init_2_hud">
                     </div>
                 </div>
             </div>
@@ -137,8 +137,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Team 1:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="auto_park" id="auto_1">Park</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="auto_park" id="auto_end-1" onclick="buttonSwitch('auto_end-1')">Park</button>
+                        <img src="/static/icon/x-lg.svg" class="input-group-text" id="auto_1_hud">
                     </div>
                 </div>
             </div>
@@ -148,8 +148,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Team 2:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="auto_park" id="auto_2">Park</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="auto_park" id="auto_end-2" onclick="buttonSwitch('auto_end-2')">Park</button>
+                        <img src="/static/icon/x-lg.svg" class="input-group-text" id="auto_2_hud">
                     </div>
                 </div>
             </div>
@@ -162,8 +162,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Team 1:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="tele_park" id="tele_1">Park</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="tele_park" id="tele_end-1" onclick="buttonSwitch('tele_end-1')">Park</button>
+                        <img src="/static/icon/x-lg.svg" class="input-group-text" id="tele_1_hud">
                     </div>
                 </div>
             </div>
@@ -173,8 +173,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Team 2:</span>
                         </div>
-                        <button type="button" class="btn btn-outline-success form-control" name="tele_park" id="tele_2">Park</button>
-                        <img src="/static/icon/x-lg.svg" class="input-group-text">
+                        <button type="button" class="btn btn-outline-success form-control" name="tele_park" id="tele_end-2" onclick="buttonSwitch('tele_end-2')">Park</button>
+                        <img src="/static/icon/x-lg.svg" class="input-group-text" id="tele_2_hud">
                     </div>
                 </div>
             </div>
@@ -184,5 +184,81 @@
 </div>
 {% endblock %}
 {% block script %}
+<script>
+    function jsonPost(method, tar, x) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, tar, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send(JSON.stringify(x));
 
+        return xhr;
+    }
+    const blue = {% if blue %}'blue'{% else %}'red'{% endif %};
+
+    var count=false;
+    function updateData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/match/data');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var res = JSON.parse(xhr.responseText);
+                const typeCheck = ['', 'Pratice', 'Quals', 'Quaters', 'Semis', 'Finals'];
+                const modeList = ['Ready', 'CountDown', 'Auto', 'Tele', 'EndGame', 'Finish'];  
+                var data = document.getElementsByName('data');
+                data[0].innerText = 'Event: ' + res['match']['event'];
+                data[1].innerText = 'Match: ' + typeCheck[res['match']['type']] + ' ' + res['match']['serial'];
+                data[2].innerText = 'Team: ' + {% if blue %}res['match']['team'][0] + ' ' + res['match']['team'][1]{% else %}res['match']['team'][2] + ' ' + res['match']['team'][3]{% endif %};
+                data[3].innerText = 'Mode: ' + modeList[res['match']['mode']];
+                data[4].innerText = 'Time: ' + res['match']['leftTime'];
+
+                const side = {% if blue %}'blue'{% else %}'red'{% endif %};
+                const check = '/static/icon/check-lg.svg', cross = '/static/icon/x-lg.svg';
+                document.getElementById('auto_a').value = res['score'][side]['auto_a'];
+                document.getElementById('auto_c').value = res['score'][side]['auto_c'];
+                document.getElementById('tele_a').value = res['score'][side]['tele_a'];
+                document.getElementById('tele_c').value = res['score'][side]['tele_c'];
+                document.getElementById('end_c').value = res['score'][side]['end_c'];
+                document.getElementById('init_1_hud').src = res['score'][side]['each'][0]['init']?check:cross;
+                document.getElementById('init_2_hud').src = res['score'][side]['each'][1]['init']?check:cross;
+                document.getElementById('auto_1_hud').src = res['score'][side]['each'][0]['auto_end']?check:cross;
+                document.getElementById('auto_2_hud').src = res['score'][side]['each'][1]['auto_end']?check:cross;
+                document.getElementById('tele_1_hud').src = res['score'][side]['each'][0]['tele_end']?check:cross;
+                document.getElementById('tele_2_hud').src = res['score'][side]['each'][1]['tele_end']?check:cross;
+
+                count = res['match']['count'][blue == 'blue'?0:1] && res['match']['mode']>1 && res['match']['mode']<5;
+            }
+        }
+    }
+
+    function minus(id) {
+        var target = document.getElementById(id);
+        if (target.value > 0) {
+            jsonPost('POST', '/match/data/', {'cmd': 'scoring', 'target': id, 'type': 'number', 'value': parseInt(target.value)-1, 'blue': blue});
+        }
+    }
+
+    function plus(id) {
+        var target = document.getElementById(id);
+        jsonPost('POST', '/match/data/', {'cmd': 'scoring', 'target': id, 'type': 'number', 'value': parseInt(target.value)+1, 'blue': blue});
+    }
+
+    function buttonSwitch(id) {
+        jsonPost('POST', '/match/data/', {'cmd': 'scoring', 'target': id, 'type': 'switch', 'blue': blue})
+    }
+
+    function counter() {
+        if (count) plus('tele_c');
+    }
+
+    var updater;
+    window.onload = function() {
+        updater = setInterval(updateData, 500);
+        setInterval(counter, 1000);
+    }
+</script>
 {% endblock script %}

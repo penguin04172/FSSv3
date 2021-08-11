@@ -12,6 +12,7 @@ class Score(models.Model):
     foul = models.IntegerField(default=0)
     tech = models.IntegerField(default=0)
     all_point = models.IntegerField(default=0)
+    rank_point = models.IntegerField(default=0)
 
 class Each(models.Model):
     init = models.BooleanField(default=False)

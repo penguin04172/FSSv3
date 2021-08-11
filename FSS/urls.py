@@ -35,4 +35,6 @@ urlpatterns = [
     path('match/data/', data),
     path('match/board/', board),
     path('match/referee/', referee),
+    path('match/prepare/', prepare),
+    path('match/result/', result),
 ]
