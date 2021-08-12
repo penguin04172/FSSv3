@@ -17,7 +17,7 @@ DATA = {
         'leftTime': 0,
         'passTime': 0,
         'yellow': [0, 0, 0, 0],
-        'red': [0, 0, 0, 0],
+        'red': [False, False, False, False],
         'count': [False, False],
     },
     'score': {
@@ -171,6 +171,9 @@ def data(request):
             DATA['score']['red']['foul'] = red.foul
             DATA['score']['red']['tech'] = red.tech
             DATA['score']['red']['all_point'] = red.all_point
+            
+            DATA['match']['yellow'] = [0, 0, 0, 0]
+            DATA['match']['red'] = [False, False, False, False]
 
         elif data['cmd'] == 'changeTeam':
             print(data)
@@ -232,6 +235,8 @@ def data(request):
             DATA['match']['mode'] = 0
             DATA['match']['passTime'] = 0
             DATA['match']['leftTime'] = 0
+            DATA['match']['yellow'] = [0, 0, 0, 0]
+            DATA['match']['red'] = [False, False, False, False]
             res = {'res': 'ok'}
 
         elif data['cmd'] == "scoring":
@@ -255,6 +260,21 @@ def data(request):
             all = all + color['foul']*5 + color['tech']*15
             color['all_point'] = all
             res = {'res': 'ok'}
+
+        elif data['cmd'] == "referee":
+            DATA['score'][data['side']][data['tar']] = data['num']
+            res = {'res': 'ok'}
+
+        elif data['cmd'] == 'warn':
+            if data['type'] == 'warn':
+                DATA['match']['yellow'][data['tar']] = DATA['match']['yellow'][data['tar']] + 1
+                DATA['match']['red'][data['tar']] = DATA['match']['yellow'][data['tar']] >= 3
+            elif data['type'] == 'out':
+                DATA['match']['red'][data['tar']] = True
+            res = {'res': 'ok'}
+        
+        else:
+            res = {'res': 'cmdNotFound'}
 
         return HttpResponse(json.dumps(res))
 

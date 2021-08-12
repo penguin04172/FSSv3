@@ -53,8 +53,8 @@
                         <div class="col ml-2 mr-2 mt-1" style=" transform: translate(0, -10%);">
                             <div class="row justify-content-between">
                                 <div class="col-2 text-center mt-1">
-                                    <h2 class="bg-light" id="team1_blue" name="team">0000</h2>
-                                    <h2 class="bg-light" id="team2_blue" name="team">0000</h2>
+                                    <h2 id="team1_blue" name="team">0000</h2>
+                                    <h2 id="team2_blue" name="team">0000</h2>
                                 </div>
                                 <div class="col-4 bg-primary border text-center text-light mb-2">
                                     <h1 style="font-size: 100px;" id="score_blue">0</h1>
@@ -63,8 +63,8 @@
                                     <h1 style="font-size: 100px;" id="score_red">0</h1>
                                 </div>
                                 <div class="col-2 text-center mt-1">
-                                    <h2 class="bg-light" id="team1_red" name="team">0000</h2>
-                                    <h2 class="bg-light" id="team2_red" name="team">0000</h2>
+                                    <h2 id="team1_red" name="team">0000</h2>
+                                    <h2 id="team2_red" name="team">0000</h2>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +116,7 @@
                 team = document.getElementsByName('team');
                 for (var i=0 ; i<team.length ; i++) {
                     team[i].innerText = res['match']['team'][i];
+                    team[i].style.backgroundColor = res['match']['red'][i]?'red':res['match']['yellow'][i]?'yellow':'white';
                 }
 
                 const check = '<img src="/static/icon/check-lg.svg"></img>', cross = '<img src="/static/icon/x-lg.svg"></img>';

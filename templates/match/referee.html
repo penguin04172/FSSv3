@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}Referee{% endblock title %}
+{% block container %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <h2 id="nowMatch">Now playing: </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2 id="mode">Mode: </h2>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <h2 id="timer">Time left: </h2>
+        </div>
+    </div>
+
+    <h3>Fouls</h3>
+    <div class="row text-center">
+        <div class="col-2" style="background-color: aqua;font-size: 60px;" onclick="minus('blue', 'foul')">-</div>
+        <div class="col-2" style="background-color: white;font-size: 60px;" id="foul_blue">0</div>
+        <div class="col-2" style="background-color: aqua;font-size: 60px;" onclick="plus('blue', 'foul')">+</div>
+        <div class="col-2" style="background-color: pink;font-size: 60px;" onclick="minus('red', 'foul')">-</div>
+        <div class="col-2" style="background-color: white;font-size: 60px;" id="foul_red">0</div>
+        <div class="col-2" style="background-color: pink;font-size: 60px;" onclick="plus('red', 'foul')">+</div>
+    </div>
+
+    <h3>Techs</h3>
+    <div class="row text-center">
+        <div class="col-2" style="background-color: blue;font-size: 60px;" onclick="minus('blue', 'tech')">-</div>
+        <div class="col-2" style="background-color: white;font-size: 60px;" id="tech_blue">0</div>
+        <div class="col-2" style="background-color: blue;font-size: 60px;" onclick="plus('blue', 'tech')">+</div>
+        <div class="col-2" style="background-color: red;font-size: 60px;" onclick="minus('red', 'tech')">-</div>
+        <div class="col-2" style="background-color: white;font-size: 60px;" id="tech_red">0</div>
+        <div class="col-2" style="background-color: red;font-size: 60px;" onclick="plus('red', 'tech')">+</div>
+    </div>
+
+    <h3>Warning</h3>
+    <div class="row text-center" style="font-size: 40px;">
+        <div class="col" name="team"></div>
+        <div class="col" name="team"></div>
+        <div class="col" name="team"></div>
+        <div class="col" name="team"></div>
+    </div>
+    <div class="row text-center mt-1" style="font-size: 40px;">
+        <div class="col bg-warning" name="warn" onclick="warn(0, 'warn')">0</div>
+        <div class="col bg-warning" name="warn" onclick="warn(1, 'warn')">0</div>
+        <div class="col bg-warning" name="warn" onclick="warn(2, 'warn')">0</div>
+        <div class="col bg-warning" name="warn" onclick="warn(3, 'warn')">0</div>
+    </div>
+    <div class="row text-center mt-1" style="font-size: 40px;">
+        <div class="col" style="background-color: greenyellow;" name="out" onclick="warn(0, 'out')">Stop</div>
+        <div class="col" style="background-color: greenyellow;" name="out" onclick="warn(1, 'out')">Stop</div>
+        <div class="col" style="background-color: greenyellow;" name="out" onclick="warn(2, 'out')">Stop</div>
+        <div class="col" style="background-color: greenyellow;" name="out" onclick="warn(3, 'out')">Stop</div>
+    </div>
+</div>
+{% endblock container %}
+{% block script %}
+<script>
+    function jsonPost(method, tar, x) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, tar, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send(JSON.stringify(x));
+
+        return xhr;
+
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState == 4 && xhr.status == 200) {
+        //         console.log(xhr.responseText);
+        //         res = xhr.responseText;
+        //     }
+        // }
+    }
+
+    function updateData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/match/data');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var res = JSON.parse(xhr.responseText);
+                var now = document.getElementById('nowMatch');
+                var typeCheck = ['', 'Pratice', 'Quals', 'Quater', 'Semi', 'Final'];
+                now.innerText = "Now playing:\n" + res['match']['event'] + ' ' + typeCheck[res['match']['type']] + '-' + res['match']['serial'].toString();
+
+                var mode = document.getElementById('mode');
+                const modeList = ['Ready', 'CD', 'Auto', 'TeleOP', 'EndGame', 'Finish'];
+                mode.innerText = "Mode: " + modeList[res['match']['mode']];
+
+                var timer = document.getElementById('timer');
+                timer.innerText = "Time left: " + res['match']['leftTime'].toString();
+
+                document.getElementById('foul_red').innerText = res['score']['blue']['foul'];
+                document.getElementById('tech_red').innerText = res['score']['blue']['tech'];
+                document.getElementById('foul_blue').innerText = res['score']['red']['foul'];
+                document.getElementById('tech_blue').innerText = res['score']['red']['tech'];
+
+                var team = document.getElementsByName('team');
+                for (var i=0 ; i<team.length ; i++) {
+                    team[i].innerText = res['match']['team'][i];
+                }
+
+                var warn = document.getElementsByName('warn');
+                for (var i=0 ; i<warn.length ; i++) {
+                    warn[i].innerText = res['match']['yellow'][i].toString();
+                }
+                
+                var out = document.getElementsByName('out');
+                for (var i=0 ; i<warn.length ; i++) {
+                    out[i].style.backgroundColor = res['match']['red'][i]?'red':'greenyellow';
+                }
+            }
+        }
+    }
+
+    function plus(side, tar) {
+        var num = parseInt(document.getElementById(tar + '_' + side).innerText) + 1;
+        jsonPost('POST', '/match/data/', {'cmd': 'referee', 'side': side=='blue'?'red':'blue', 'num': num, 'tar': tar});
+    }
+    
+    function minus(side, tar) {
+        var num = parseInt(document.getElementById(tar + '_' + side).innerText) > 0?parseInt(document.getElementById(tar + '_' + side).innerText)-1:0;
+        jsonPost('POST', '/match/data/', {'cmd': 'referee', 'side': side=='blue'?'red':'blue', 'num': num, 'tar': tar});
+    }
+
+    function warn(tar, type) {
+        jsonPost('POST', '/match/data/', {'cmd': 'warn', 'type': type, 'tar': tar});
+    }
+
+    var updaterData;
+    window.onload = function() {
+        updaterData = setInterval(updateData, 500);
+    }
+</script>
+{% endblock script %}

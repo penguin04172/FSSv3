@@ -212,6 +212,7 @@
                 var team = document.getElementsByName('team');
                 for (var i=0 ; i<team.length ; i++) {
                     team[i].innerText = res['match']['team'][i];
+                    team[i].style.backgroundColor = res['match']['red'][i]?'red':res['match']['yellow'][i]?'yellow':'white';
                 }
 
                 document.getElementById('scoreBlue').innerText = res['score']['blue']['all_point'];
