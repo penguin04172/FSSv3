@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from .models import *
 from apps.index.models import *
-import json
+import json, requests
 
 # Create your views here.
 
@@ -85,13 +85,14 @@ def referee(request):
 
 def prepare(request):
     teamList = [Team.objects.get(id=int(t)) for t in DATA['match']['team']]
+    rank = json.loads(requests.get(f'http://127.0.0.1/rank?event={DATA["match"]["event"]}').text)
     return render(request, 'match/prepare.html', {'data': DATA, 'team': teamList, 'type': MatchType.objects.get(id=DATA['match']['type'])})
 
 def result(request):
     teamList = [Team.objects.get(id=int(t)) for t in DATA['match']['team']]
     scoreBlue = {
         'all_point': DATA['score']['blue']['all_point'],
-        'foul_point': DATA['score']['blue']['foul'] + DATA['score']['blue']['tech'],
+        'foul_point': DATA['score']['blue']['foul'] *5 + DATA['score']['blue']['tech'] *15,
         'init_point': (5 if DATA['score']['blue']['each'][0]['init'] else 0) + (5 if DATA['score']['blue']['each'][1]['init'] else 0),
         'end_point': (10 if DATA['score']['blue']['each'][0]['tele_end'] else 0) + (10 if DATA['score']['blue']['each'][1]['tele_end'] else 0) + (5 if DATA['score']['blue']['each'][0]['auto_end'] else 0) + (5 if DATA['score']['blue']['each'][1]['auto_end'] else 0) + DATA['score']['blue']['end_c']*10,
         'rank_point': (2 if DATA['score']['blue']['all_point'] > DATA['score']['red']['all_point'] else 0) + (1 if DATA['score']['blue']['auto_a'] + DATA['score']['blue']['tele_a'] >= 9 else 0) + (1 if DATA['score']['blue']['each'][0]['tele_end'] and DATA['score']['blue']['each'][1]['tele_end'] and DATA['score']['blue']['end_c'] > 0 else 0),
@@ -102,7 +103,7 @@ def result(request):
     }
     scoreRed = {
         'all_point': DATA['score']['red']['all_point'],
-        'foul_point': DATA['score']['red']['foul'] + DATA['score']['red']['tech'],
+        'foul_point': DATA['score']['red']['foul'] *5 + DATA['score']['red']['tech'] *15,
         'init_point': (5 if DATA['score']['red']['each'][0]['init'] else 0) + (5 if DATA['score']['red']['each'][1]['init'] else 0),
         'end_point': (10 if DATA['score']['red']['each'][0]['tele_end'] else 0) + (10 if DATA['score']['red']['each'][1]['tele_end'] else 0) + (5 if DATA['score']['red']['each'][0]['auto_end'] else 0) + (5 if DATA['score']['red']['each'][1]['auto_end'] else 0) + DATA['score']['red']['end_c']*10,
         'rank_point': (2 if DATA['score']['red']['all_point'] > DATA['score']['blue']['all_point'] else 0) + (1 if DATA['score']['red']['auto_a'] + DATA['score']['red']['tele_a'] >= 9 else 0) + (1 if DATA['score']['red']['each'][0]['tele_end'] and DATA['score']['red']['each'][1]['tele_end'] and DATA['score']['red']['end_c'] > 0 else 0),
@@ -195,6 +196,9 @@ def data(request):
 
         elif data['cmd'] == 'reset':
             match = Match.objects.get(id=DATA['match']['id'])
+            match.played = True
+            match.save()
+
             score = match.score_set.all()
             b1 = score.first().each_set.first()
             b1.__dict__.update(**DATA['score']['blue']['each'][0])
@@ -237,6 +241,7 @@ def data(request):
             DATA['match']['leftTime'] = 0
             DATA['match']['yellow'] = [0, 0, 0, 0]
             DATA['match']['red'] = [False, False, False, False]
+            DATA['match']['count'] = [0, 0]
             res = {'res': 'ok'}
 
         elif data['cmd'] == "scoring":

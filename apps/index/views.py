@@ -1,3 +1,4 @@
+import json, requests
 from django.shortcuts import redirect, render, HttpResponse
 from .models import *
 from apps.score.models import *
@@ -43,7 +44,7 @@ def event(request):
                     match = Match.objects.create(id=f'{event.id}_{type}_{serial}', event=event, type_id=type, serial=serial)
                     s = ''
                     for t in team:
-                        s = s + t + (',' if t != team[-1] else '\n')
+                        s = s + t + (',' if t != team[-1] else '')
                     match.team = s
                     match.save()
                     scoreBlue = Score.objects.create(match=match)
@@ -54,7 +55,7 @@ def event(request):
                     match = Match.objects.get(id=f'{event.id}_{type}_{serial}')
                     s = ''
                     for t in team:
-                        s = s + t + (',' if t != team[-1] else '\n')
+                        s = s + t + (',' if t != team[-1] else '')
                     match.team = s
                     match.save()
             elif cmd == 'delete':
@@ -72,7 +73,7 @@ def event(request):
                     each = chunk.split(',')
                     team = ''
                     for e in each[2:6]:
-                        team = team+e+(',' if e != each[5] else '\n')
+                        team = team+e+(',' if e != each[5] else '')
                     try:
                         match = Match.objects.create(id=f'{event.id}_{each[0]}_{each[1]}', event=event, type_id=int(each[0]), serial=int(each[1]), team=team)
                     except:
@@ -90,6 +91,7 @@ def event(request):
     qualList = Match.objects.filter(event=event, type_id=2)
     praticeList = Match.objects.filter(event=event, type_id=1)
     playoffList = Match.objects.filter(event=event, type_id__gt=2)
+    rankList = json.loads(requests.get(f'http://127.0.0.1/rank?event={id}').text)
     return render(request, 'event.html', {
         'event': event,
         'teamAll': teamAll,
@@ -97,6 +99,7 @@ def event(request):
         'qualList': qualList,
         'praticeList': praticeList,
         'playoffList': playoffList,
+        'rankList': rankList,
     })
 
 def team(request):
@@ -118,4 +121,57 @@ def team(request):
         return redirect('/')
     return render(request, 'team.html', {
         'team': team,
+    })
+
+def rank(request):
+    event = Event.objects.get(id=request.GET.get('event'))
+    team = event.team.all()
+    match = Match.objects.filter(played=True, type_id=2, event=event)
+
+    rank = []
+    for t in team:
+        rank.append({'team': int(t.id), 'rp': 0, 'auto': 0, 'tele': 0, 'end': 0, 'num': 0, 'rs': 0})
+
+    for r in rank:
+        for m in match:
+            blue_score = m.score_set.first()
+            red_score = m.score_set.last()
+            teamList = m.team.split(',')
+            if str(r['team']) == teamList[0]:
+                r['rp'] = r['rp'] + blue_score.rank_point
+                r['auto'] = r['auto'] + (5 if blue_score.each_set.first().init else 0) + blue_score.auto_a *15 + blue_score.auto_c *5
+                r['tele'] = r['tele'] + blue_score.tele_a *7 + blue_score.tele_c
+                r['end'] = r['end'] + (5 if blue_score.each_set.first().auto_end else 0) + (10 if blue_score.each_set.first().tele_end else 0) + blue_score.end_c *10
+                r['num'] = r['num'] + 1
+                r['rs'] = r['rp'] / r['num']
+            elif str(r['team']) == teamList[1]:
+                r['rp'] = r['rp'] + blue_score.rank_point
+                r['auto'] = r['auto'] + (5 if blue_score.each_set.last().init else 0) + blue_score.auto_a *15 + blue_score.auto_c *5
+                r['tele'] = r['tele'] + blue_score.tele_a *7 + blue_score.tele_c
+                r['end'] = r['end'] + (5 if blue_score.each_set.last().auto_end else 0) + (10 if blue_score.each_set.last().tele_end else 0) + blue_score.end_c *10
+                r['num'] = r['num'] + 1
+                r['rs'] = r['rp'] / r['num']
+            elif str(r['team']) == teamList[2]:
+                r['rp'] = r['rp'] + red_score.rank_point
+                r['auto'] = r['auto'] + (5 if red_score.each_set.first().init else 0) + red_score.auto_a *15 + red_score.auto_c *5
+                r['tele'] = r['tele'] + red_score.tele_a *7 + red_score.tele_c
+                r['end'] = r['end'] + (5 if red_score.each_set.first().auto_end else 0) + (10 if red_score.each_set.first().tele_end else 0) + red_score.end_c *10
+                r['num'] = r['num'] + 1
+                r['rs'] = r['rp'] / r['num']
+            elif str(r['team']) == teamList[3]:
+                r['rp'] = r['rp'] + red_score.rank_point
+                r['auto'] = r['auto'] + (5 if red_score.each_set.last().init else 0) + red_score.auto_a *15 + red_score.auto_c *5
+                r['tele'] = r['tele'] + red_score.tele_a *7 + red_score.tele_c
+                r['end'] = r['end'] + (5 if red_score.each_set.last().auto_end else 0) + (10 if red_score.each_set.last().tele_end else 0) + red_score.end_c *10
+                r['num'] = r['num'] + 1
+                r['rs'] = r['rp'] / r['num']
+    # print(rank)
+        
+    rank = sorted(rank, key= lambda e:(-e.__getitem__('rs')))
+    return HttpResponse(json.dumps(rank))
+
+def rankView(request):
+    rankList = json.loads(requests.get(f'http://127.0.0.1/rank?event={request.GET.get("event")}').text)
+    return render(request, 'rank.html', {
+        'rankList': rankList,
     })

@@ -73,9 +73,9 @@
         <div class="col-6">
             <div class="row mt-2">
                     <div class="col">
-                        <div class="progress" style="height: 70px;">
-                            <div class="progress-bar bg-success" style="width: 0%;" id="timeProg"></div>
-                            <span class="badge rounded-pill bg-light text-dark" style="position: fixed; left: 900px; font-size: 40px;" id="timeLeft">15</span>
+                        <div class="progress" style="height: 80px;">
+                            <div class="progress-bar" style="width: 0%;" id="timeProg"></div>
+                            <span class="badge rounded-pill bg-light text-dark" style="position: fixed; left: 900px; font-size: 50px;" id="timeLeft">15</span>
                         </div>
                     </div>
             </div>
@@ -206,8 +206,8 @@
                 res['match']['passTime'] = res['match']['passTime']>150?150:res['match']['passTime'];
                 var passPer = parseInt(res['match']['passTime']/1.5), timeLeft = res['match']['leftTime'];
                 document.getElementById('timeProg').style.width = passPer.toString() + "%";
-                document.getElementById('timeProg').style.backgroundColor = res['pass'] < 120?"#28a745":res['pass']<150?"#ffc107":"#dc3545";
-                document.getElementById('timeLeft').innerText = timeLeft.toString();
+                document.getElementById('timeProg').style.backgroundColor = res['match']['passTime'] < 120?"#28a745":res['match']['passTime']<150?"#ffc107":"#dc3545";
+                document.getElementById('timeLeft').innerText = res['match']['mode']<5?timeLeft.toString():'0';
 
                 var team = document.getElementsByName('team');
                 for (var i=0 ; i<team.length ; i++) {

@@ -29,7 +29,7 @@
                                 <div class="progress-bar" role="progressbar" style="width: 0%;" id="timeProg"></div>
                             </div>
                             <h1 class="text-center" style="align-self: center; transform: translate(0, -100%);">
-                                <span class="badge badge-light badge-pill" id="timeLeft">0</span>
+                                <span class="badge rounded-pill bg-light text-dark" id="timeLeft">0</span>
                             </h1>
                         </div>
                         <div class="col row ml-2 mr-2 justify-content-around text-white text-center">
@@ -111,7 +111,7 @@
                 var passPer = parseInt(res['match']['passTime']/1.5), leftTime = res['match']['leftTime'];
                 document.getElementById('timeProg').style.width = passPer.toString() + '%';
                 document.getElementById('timeProg').style.backgroundColor = res['match']['passTime'] < 120?"#28a745":res['match']['passTime']<150?"#ffc107":"#dc3545";
-                document.getElementById('timeLeft').innerText = leftTime.toString();
+                document.getElementById('timeLeft').innerText = res['match']['mode']<5?leftTime.toString():'0';
 
                 team = document.getElementsByName('team');
                 for (var i=0 ; i<team.length ; i++) {

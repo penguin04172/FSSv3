@@ -37,6 +37,7 @@ class Match(models.Model):
     serial = models.IntegerField()
     rankBlue = models.IntegerField(default=0)
     rankRed = models.IntegerField(default=0)
+    played = models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.event.id} {self.type} {self.serial}'

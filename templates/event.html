@@ -69,13 +69,13 @@
                 </button>
             </div>
             <div class="col-4">
-                <form action="./?id={{event.id}}" enctype="multipart/form-data">
+                <form action="./?id={{event.id}}">
                     {% csrf_token %}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <label for="upload" class="input-group-text">Upload:</label>
                         </div>
-                        <input type="file" name="upload" id="upload" class="form-control">
+                        <input type="file" name="upload" id="upload" accept=".csv" class="form-control">
                         <div class="input-group-append">
                             <input type="text" hidden name="cmd" value="upload">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -336,6 +336,19 @@
                         <th scope="col">RP</th>
                     </tr>
                 </thead>
+                <tbody>
+                    {% for rank in rankList %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{rank.team}}</td>
+                        <td>{{rank.rs|floatformat}}</td>
+                        <td>{{rank.auto}}</td>
+                        <td>{{rank.tele}}</td>
+                        <td>{{rank.end}}</td>
+                        <td>{{rank.rp}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <div class="tab-pane fade" id="Team" role="tabpanel" aria-labelledby="Team-tab">

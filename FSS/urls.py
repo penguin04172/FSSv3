@@ -29,6 +29,8 @@ urlpatterns = [
     path('user/regist/', reg),
     path('event/', event),
     path('team/', team),
+    path('rank/', rank),
+    path('rankView/', rankView),
     path('match/control/', control),
     path('match/scoring/', scoring),
     path('match/stream/', stream),

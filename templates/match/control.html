@@ -180,9 +180,9 @@
             leftTime = 150-parseInt(passTime/1000);
         }else if (passTime < 180000) {
             mode = 5;
-            leftTime = 0;
+            leftTime = 180-parseInt(passTime/1000);
         }else {
-            reset();
+            // reset();
         }
 
         document.getElementById('mode').innerText = modeList[mode];
